@@ -1,0 +1,61 @@
+﻿<Window x:Class="MyDictionary.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyDictionary"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Margin="-1,3,1,-3">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <!-- Bên phải (Grid.Column=1) -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.2*"/>
+                <!-- Thanh tìm kiếm -->
+                <RowDefinition/>
+                <!-- Nội dung chính -->
+                <RowDefinition Height="0.05*"/>
+                <!-- Thông báo -->
+            </Grid.RowDefinitions>
+
+            <!-- Thanh tìm kiếm -->
+            <Grid Background="AliceBlue">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBox Name="tbSearch" Text="seerk" Width="320" Height="30"/>
+                    <Button Name="btnSearch" Click="btnSearch_Click" Content="S" Width="30"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Nội dung chính (Row=1) -->
+            <Grid Grid.Row="1">
+                <!-- Dùng Frame hoặc ContentControl -->
+                <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
+            </Grid>
+
+            <!-- Footer (Row=2) -->
+            <Grid Grid.Row="2">
+                <TextBlock Text="this app is in developing process" />
+            </Grid>
+        </Grid>
+
+        <!-- Menu bên trái -->
+        <Grid Grid.Column="0" Background="AliceBlue">
+            <Expander  HorizontalAlignment="Right" Width="auto" FontSize="15" >
+                <StackPanel>
+                    <Button Content="Home" x:Name="btnHomeNavg" Click="btnHomeNavg_Click" />
+                    <Button Content="History" x:Name="btnHistoryNavg" Click="btnHistoryNavg_Click" />
+                    <Button Content="Collections" x:Name="btnCollectionsNavg" Click="btnCollectionsNavg_Click"/>
+                    <Button Content="Tags" />
+                    <Button Content="Game" />
+                </StackPanel>
+            </Expander>
+        </Grid>
+    </Grid>
+
+</Window>
