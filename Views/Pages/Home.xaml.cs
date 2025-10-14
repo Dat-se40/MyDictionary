@@ -12,27 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MyDictionary.Model.DTOs; 
-namespace MyDictionary.Pages
+
+namespace MyDictionary.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for SuggestionsList.xaml
+    /// Interaction logic for Home.xaml
     /// </summary>
-    public partial class SuggestionsList : Page
+    public partial class Home : Page
     {
-        List<string> suggestions;
-
-        
-        public SuggestionsList()
+        public Home()
         {
             InitializeComponent();
         }
-        public void Dislay(SearchResponse response)
-        {
-            lvSuggestions.Items.Clear();    
-            suggestions = response.GetWordsList();
-            suggestions.ForEach(sug => lvSuggestions.Items.Add(sug)); 
-        }
-        
     }
 }

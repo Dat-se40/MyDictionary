@@ -25,17 +25,26 @@
             </Grid.RowDefinitions>
 
             <!-- Thanh tìm kiếm -->
-            <Grid Background="AliceBlue">
+            <Grid Background="#FFB4CCE0">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <TextBox Name="tbSearch" Text="seerk" Width="320" Height="30"/>
-                    <Button Name="btnSearch" Click="btnSearch_Click" Content="S" Width="30"/>
+                    <Button Name="btnGoBack" Content="⬅ " Click="btnGoBack_Click"/>
+                    <Button Name="btnGoForward" Content="➡" Click="btnGoForward_Click"/>
+                    <TextBox Name="tbSearch" Text="seerk" Width="320" Height="30"
+                             FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                    <Button Name="btnSearch" Click="btnSearch_Click" Content="Search"/>
                 </StackPanel>
             </Grid>
 
             <!-- Nội dung chính (Row=1) -->
             <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="631*"/>
+                    <ColumnDefinition Width="51*"/>
+                    <ColumnDefinition Width="91*"/>
+                </Grid.ColumnDefinitions>
                 <!-- Dùng Frame hoặc ContentControl -->
-                <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
+                <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Grid.ColumnSpan="3"/>
+                
             </Grid>
 
             <!-- Footer (Row=2) -->
@@ -46,8 +55,8 @@
 
         <!-- Menu bên trái -->
         <Grid Grid.Column="0" Background="AliceBlue">
-            <Expander  HorizontalAlignment="Right" Width="auto" FontSize="15" >
-                <StackPanel>
+            <Expander x:Name="exder" HorizontalAlignment="Right" Width="auto" FontSize="15" >
+                <StackPanel Name="spn">
                     <Button Content="Home" x:Name="btnHomeNavg" Click="btnHomeNavg_Click" />
                     <Button Content="History" x:Name="btnHistoryNavg" Click="btnHistoryNavg_Click" />
                     <Button Content="Collections" x:Name="btnCollectionsNavg" Click="btnCollectionsNavg_Click"/>
@@ -56,6 +65,7 @@
                 </StackPanel>
             </Expander>
         </Grid>
+
     </Grid>
 
 </Window>

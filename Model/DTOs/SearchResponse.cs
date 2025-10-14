@@ -29,7 +29,9 @@ namespace MyDictionary.Model.DTOs
             {
                 newRespone._words.Add(new Word() { word = w});  
             });
+            if (newRespone._words.Count != 0 ) newRespone._isSuccess = true;    
             return newRespone;
         } 
+        
     }
 }

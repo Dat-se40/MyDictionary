@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyDictionary.Model.DTOs
 {
-    internal class SearchRequest : EventArgs
+    public class SearchRequest : EventArgs
     {
         private string _searchTermBacking;  
         public string _searchTerm

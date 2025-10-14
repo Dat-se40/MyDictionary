@@ -1,7 +1,6 @@
 ﻿using MyDictionary.Data;
 using MyDictionary.Model;
 using MyDictionary.Model.DTOs;
-using MyDictionary.Pages;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Media.TextFormatting;
 namespace MyDictionary.Services
 {
-    internal class WordSearchService
+    public class WordSearchService
     {
         private readonly WordCacheManager  _cacheManager = new WordCacheManager();
         private List<string> _dictionary = FileStorage.BuildDictionary();

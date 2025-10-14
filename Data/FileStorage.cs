@@ -3,7 +3,9 @@ using MyDictionary.Model;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.IO;
+using System.IO.IsolatedStorage;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MyDictionary.Data
 {
@@ -37,19 +39,19 @@ namespace MyDictionary.Data
             }
             return words;
         }
-        
+
         public static List<string> GetAvailableWordList()
         {
             List<string> results = File.ReadAllLines(_listFile).Where(line => !string.IsNullOrWhiteSpace(line)).
-                                    Select(line => line.Trim()).ToList().ToList();   
-            return results; 
+                                    Select(line => line.Trim()).ToList().ToList();
+            return results;
         }
-        
+
         public static async Task<List<Word>?> LoadWordAsync(string word)
         {
             string path = GetWordFilePath(word);
             if (!File.Exists(path)) return null;
-            
+
             var content = await File.ReadAllTextAsync(path);
             return JsonConvert.DeserializeObject<List<Word>>(content);
         }
@@ -60,7 +62,7 @@ namespace MyDictionary.Data
 
             string path = GetWordFilePath(words[0].word);
 
-            if (File.Exists(path)) return false; 
+            if (File.Exists(path)) return false;
 
             string content = JsonConvert.SerializeObject(words, Formatting.Indented);
             File.WriteAllTextAsync(path, content);
@@ -72,8 +74,33 @@ namespace MyDictionary.Data
 
             var list1 = GetAvailableWordList();
             var list2 = GetStoredWordList();
-            return  list1.Concat(list2).Distinct().ToList();
+            return list1.Concat(list2).Distinct().ToList();
         }
-    
+        public static void Download(List<Word> target)
+        { 
+            string message = string.Empty;
+            if (target != null && target.Count != 0)
+            {
+                var word = target[0].word;
+                string path = GetWordFilePath(word);
+                if (File.Exists(path))
+                {
+                    message = $"{word} existed in " + path;
+                }
+                else
+                {
+                    string content = JsonConvert.SerializeObject(target, Formatting.Indented);
+                    File.WriteAllText(path, content);
+                    message = $"{word} has been downloaded successfully in " + path;
+                }
+
+            }
+            else 
+            {
+                message = "have no word to download"; 
+            }
+
+                MessageBox.Show(message, "Download status", MessageBoxButton.OK); 
+        }
     }
 }
