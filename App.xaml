@@ -4,6 +4,14 @@
              xmlns:local="clr-namespace:MyDictionary"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resource/Styles/Buttons.xaml" />
+                <ResourceDictionary Source= "/Resource/Styles/Containers.xaml"/>
+                <ResourceDictionary Source="/Resource/Styles/ColoursStyles.xaml"/>
+                <ResourceDictionary Source= "/Resource/Styles/Inputs.xaml"/>
+                <ResourceDictionary Source= "/Resource/Styles/Themes.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

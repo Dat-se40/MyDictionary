@@ -6,66 +6,450 @@
         xmlns:local="clr-namespace:MyDictionary"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid Margin="-1,3,1,-3">
+    <Grid>
+        <Grid>
+            <!-- Sidebar Overlay - Lớp phủ khi mở sidebar -->
+            <Border x:Name="Overlay"
+            Background="#80000000"
+            Visibility="Collapsed"
+            MouseDown="Overlay_MouseDown"
+            Panel.ZIndex="99"/>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+            <!-- Main Layout -->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!-- Navbar -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Toolbar -->
+                    <RowDefinition Height="*"/>
+                    <!-- Main Content (ScrollViewer) -->
+                </Grid.RowDefinitions>
 
-        <!-- Bên phải (Grid.Column=1) -->
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.2*"/>
-                <!-- Thanh tìm kiếm -->
-                <RowDefinition/>
-                <!-- Nội dung chính -->
-                <RowDefinition Height="0.05*"/>
-                <!-- Thông báo -->
-            </Grid.RowDefinitions>
+                <!-- ================================= -->
+                <!-- NAVBAR - Thanh điều hướng trên cùng -->
+                <!-- ================================= -->
+                <Border Grid.Row="0" Background="{DynamicResource NavbarBackground}" Padding="15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <!-- Hamburger button -->
+                            <ColumnDefinition Width="*"/>
+                            <!-- Search container -->
+                            <ColumnDefinition Width="Auto"/>
+                            <!-- Theme toggle -->
+                        </Grid.ColumnDefinitions>
 
-            <!-- Thanh tìm kiếm -->
-            <Grid Background="#FFB4CCE0">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Button Name="btnGoBack" Content="⬅ " Click="btnGoBack_Click"/>
-                    <Button Name="btnGoForward" Content="➡" Click="btnGoForward_Click"/>
-                    <TextBox Name="tbSearch" Text="seerk" Width="320" Height="30"
-                             FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                    <Button Name="btnSearch" Click="btnSearch_Click" Content="Search"/>
-                </StackPanel>
+                        <!-- Hamburger Button - Mở/đóng Sidebar -->
+                        <Button x:Name="HamburgerBtn"
+                        Grid.Column="0"
+                        Style="{StaticResource HamburgerButtonStyle}"
+                        Click="HamburgerBtn_Click"/>
+
+                        <!-- Search Container - Thanh tìm kiếm -->
+                        <Border Grid.Column="1"
+                        Style="{StaticResource SearchContainerStyle}"
+                        MaxWidth="700"
+                        HorizontalAlignment="Center" Width="518">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!-- Search icon -->
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Search input -->
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!-- Language select -->
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!-- Search button -->
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Search Icon -->
+                                <TextBlock Grid.Column="0"
+                                   Text="🔍"
+                                   FontSize="18"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,10,0"/>
+
+                                <!-- Search Input -->
+                                <TextBox x:Name="SearchInput"
+                                 Grid.Column="1"
+                                 Style="{StaticResource SearchTextBoxStyle}"
+                                />
+
+                                <!-- Language Select -->
+                                <ComboBox x:Name="LangSelect"
+                                  Grid.Column="2"
+                                  Style="{StaticResource LanguageComboBoxStyle}"
+                                  Margin="15,0"
+                                  SelectedIndex="0"
+                                  VerticalAlignment="Center">
+                                    <ComboBoxItem Content="Anh - Việt"/>
+                                    <ComboBoxItem Content="Anh - Anh"/>
+                                </ComboBox>
+
+                                <!-- Search Button -->
+                                <Button Grid.Column="3"
+                                Content="Tìm kiếm"
+                                Style="{StaticResource SearchButtonStyle}"
+                                Click="SearchBtn_Click"
+                                Name="tbnSearch"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Theme Toggle - Nút chuyển đổi Dark/Light mode -->
+                        <Border x:Name="ThemeToggle"
+                        Grid.Column="2"
+                        Width="70" Height="34"
+                        Background="White"
+                        CornerRadius="17"
+                        Cursor="Hand"
+                        MouseDown="ThemeToggle_MouseDown">
+                            <Canvas>
+                                <Border x:Name="ThemeSlider"
+                                Width="28" Height="28"
+                                Background="#5B7FFF"
+                                CornerRadius="14"
+                                Canvas.Left="3"
+                                Canvas.Top="3">
+                                    <TextBlock x:Name="ThemeIcon"
+                                       Text="🌙"
+                                       FontSize="16"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                                </Border>
+                            </Canvas>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- ================================= -->
+                <!-- TOOLBAR - Thanh công cụ -->
+                <!-- ================================= -->
+                <Border Grid.Row="1"
+                Background="{DynamicResource ToolbarBackground}"
+                Padding="15,10">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Disabled">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <!-- Home Button -->
+                            <Button Style="{StaticResource ToolButtonStyle}"
+                            Tag="Home">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🏠" FontSize="16" Margin="0,0,5,0"/>
+                                    <TextBlock Text="Home"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- History Button -->
+                            <Button Style="{StaticResource ToolButtonStyle}"
+                            Tag="History">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🕐" FontSize="16" Margin="0,0,5,0"/>
+                                    <TextBlock Text="History"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Favourite Button -->
+                            <Button Style="{StaticResource ToolButtonStyle}"
+                            Tag="Favourite">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="⭐" FontSize="16" Margin="0,0,5,0"/>
+                                    <TextBlock Text="Favourite"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- My Words Button -->
+                            <Button Style="{StaticResource ToolButtonStyle}"
+                            Tag="MyWords">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="📖" FontSize="16" Margin="0,0,5,0"/>
+                                    <TextBlock Text="My Words"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Game Button -->
+                            <Button Style="{StaticResource ToolButtonStyle}"
+                            Tag="Game">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🎮" FontSize="16" Margin="0,0,5,0"/>
+                                    <TextBlock Text="Game"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Offline Button -->
+                            <Button Style="{StaticResource ToolButtonStyle}"
+                            Tag="Offline">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="📥" FontSize="16" Margin="0,0,5,0"/>
+                                    <TextBlock Text="Offline"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Setting Button -->
+                            <Button Style="{StaticResource ToolButtonStyle}"
+                            Tag="Setting">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="⚙️" FontSize="16" Margin="0,0,5,0"/>
+                                    <TextBlock Text="Setting"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+
+                <!-- ================================= -->
+                <!-- MAIN CONTENT - Nội dung chính (có scroll) -->
+                <!-- ================================= -->
+                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <!-- Thông tin được load của các trang-->
+                        <Frame x:Name="MainFrame"
+                               VerticalAlignment="Stretch"
+                               Height="Auto" />
+
+                        <!-- ================================= -->
+                        <!-- FOOTER - Phần thông tin (nằm dưới cùng, scroll mới thấy) -->
+                        <!-- ================================= -->
+                        <Border Background="{DynamicResource NavbarBackground}"
+                        Padding="40,30"
+                        Margin="0,50,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Thông tin đồ án -->
+                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                    <TextBlock Text="📚 Thông tin đồ án"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       Margin="0,0,0,10"/>
+                                    <TextBlock Foreground="White" Opacity="0.9" TextWrapping="Wrap">
+                                <Run Text="Môn học: " FontWeight="Bold"/>
+                                <Run Text="Lập trình trực quan"/>
+                                    </TextBlock>
+                                    <TextBlock Foreground="White" Opacity="0.9" TextWrapping="Wrap">
+                                <Run Text="Giảng viên: " FontWeight="Bold"/>
+                                <Run Text="ThS. Mai Trọng Khang"/>
+                                    </TextBlock>
+                                    <TextBlock Foreground="White" Opacity="0.9" TextWrapping="Wrap">
+                                <Run Text="Học kỳ: " FontWeight="Bold"/>
+                                <Run Text="1 - Năm 2024-2025"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <!-- Thành viên nhóm -->
+                                <StackPanel Grid.Column="1" Margin="0,0,20,0">
+                                    <TextBlock Text="👥 Thành viên nhóm"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       Margin="0,0,0,10"/>
+                                    <TextBlock Foreground="White" Opacity="0.9" TextWrapping="Wrap" Margin="0,0,0,5">
+                                <Run Text="Nguyễn Tấn Đạt" FontWeight="Bold"/>
+                                <LineBreak/>
+                                <Run Text="MSSV: 2450280"/>
+                                    </TextBlock>
+                                    <TextBlock Foreground="White" Opacity="0.9" TextWrapping="Wrap" Margin="0,0,0,5">
+                                <Run Text="Võ Nguyễn Thanh Hương" FontWeight="Bold"/>
+                                <LineBreak/>
+                                <Run Text="MSSV: 24520649"/>
+                                    </TextBlock>
+                                    <TextBlock Foreground="White" Opacity="0.9" TextWrapping="Wrap">
+                                <Run Text="Phan Thế Phong" FontWeight="Bold"/>
+                                <LineBreak/>
+                                <Run Text="MSSV: 24521342"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <!-- Thời gian thực hiện -->
+                                <StackPanel Grid.Column="2" Margin="0,0,20,0">
+                                    <TextBlock Text="📅 Thời gian"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       Margin="0,0,0,10"/>
+                                    <TextBlock Foreground="White" Opacity="0.9" TextWrapping="Wrap">
+                                <Run Text="Bắt đầu: " FontWeight="Bold"/>
+                                <Run Text="01/01/2024"/>
+                                    </TextBlock>
+                                    <TextBlock Foreground="White" Opacity="0.9" TextWrapping="Wrap">
+                                <Run Text="Kết thúc: " FontWeight="Bold"/>
+                                <Run Text="15/02/2024"/>
+                                    </TextBlock>
+                                    <TextBlock Foreground="White" Opacity="0.9" TextWrapping="Wrap">
+                                <Run Text="Công nghệ: " FontWeight="Bold"/>
+                                <Run Text="WPF C#"/>
+                                    </TextBlock>
+                                    <TextBlock Foreground="White" Opacity="0.9" TextWrapping="Wrap">
+                                <Run Text="Version: " FontWeight="Bold"/>
+                                <Run Text="1.0.0"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <!-- Thông tin liên hệ -->
+                                <StackPanel Grid.Column="3">
+                                    <TextBlock Text="📞 Liên hệ"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       Margin="0,0,0,10"/>
+                                    <TextBlock Text="Email: dictionary@example.com"
+                                       Foreground="White"
+                                       Opacity="0.9"
+                                       TextWrapping="Wrap"/>
+                                    <TextBlock Text="GitHub: github.com/dictionary"
+                                       Foreground="White"
+                                       Opacity="0.9"
+                                       TextWrapping="Wrap"/>
+                                    <TextBlock Text="© 2024 Dictionary App"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       Margin="0,10,0,0"/>
+                                    <TextBlock Text="All rights reserved"
+                                       Foreground="White"
+                                       Opacity="0.9"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
 
-            <!-- Nội dung chính (Row=1) -->
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="631*"/>
-                    <ColumnDefinition Width="51*"/>
-                    <ColumnDefinition Width="91*"/>
-                </Grid.ColumnDefinitions>
-                <!-- Dùng Frame hoặc ContentControl -->
-                <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Grid.ColumnSpan="3"/>
-                
-            </Grid>
+            <!-- ================================= -->
+            <!-- SIDEBAR - Menu bên trái (ẩn/hiện) -->
+            <!-- ================================= -->
+            <Border x:Name="Sidebar"
+            Width="280"
+            HorizontalAlignment="Left"
+            Background="{DynamicResource SidebarBackground}"
+            Panel.ZIndex="100">
+                <Border.RenderTransform>
+                    <TranslateTransform X="-280"/>
+                </Border.RenderTransform>
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.3"/>
+                </Border.Effect>
 
-            <!-- Footer (Row=2) -->
-            <Grid Grid.Row="2">
-                <TextBlock Text="this app is in developing process" />
-            </Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <!-- Header -->
+                        <RowDefinition Height="*"/>
+                        <!-- Menu items -->
+                    </Grid.RowDefinitions>
+
+                    <!-- Sidebar Header -->
+                    <Border Grid.Row="0"
+                    Padding="25"
+                    Background="{DynamicResource NavbarBackground}">
+                        <StackPanel>
+                            <TextBlock Text="📖 Dictionary"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               HorizontalAlignment="Center"/>
+                            <TextBlock Text="Quick Access Menu"
+                               FontSize="12"
+                               Foreground="White"
+                               Opacity="0.9"
+                               HorizontalAlignment="Center"
+                               Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Sidebar Menu -->
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="0,20,0,0">
+                            <!-- Trang chủ -->
+                            <Button Style="{StaticResource SidebarButtonStyle}"
+                            Tag="Home">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🏠" FontSize="18" Margin="0,0,15,0"/>
+                                    <TextBlock Text="Trang chủ"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Lịch sử tra cứu -->
+                            <Button Style="{StaticResource SidebarButtonStyle}"
+                            Tag="History">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🕐" FontSize="18" Margin="0,0,15,0"/>
+                                    <TextBlock Text="Lịch sử tra cứu"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Từ yêu thích -->
+                            <Button Style="{StaticResource SidebarButtonStyle}"
+                            Tag="Favourite">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="⭐" FontSize="18" Margin="0,0,15,0"/>
+                                    <TextBlock Text="Từ yêu thích"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Bộ sưu tập của tôi -->
+                            <Button Style="{StaticResource SidebarButtonStyle}"
+                            Tag="Collection">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="📚" FontSize="18" Margin="0,0,15,0"/>
+                                    <TextBlock Text="Bộ sưu tập của tôi"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Trò chơi học từ -->
+                            <Button Style="{StaticResource SidebarButtonStyle}"
+                            Tag="Game">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="🎮" FontSize="18" Margin="0,0,15,0"/>
+                                    <TextBlock Text="Trò chơi học từ"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Thống kê học tập -->
+                            <Button Style="{StaticResource SidebarButtonStyle}"
+                            Tag="Stats">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="📊" FontSize="18" Margin="0,0,15,0"/>
+                                    <TextBlock Text="Thống kê học tập"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Tải về offline -->
+                            <Button Style="{StaticResource SidebarButtonStyle}"
+                            Tag="Download">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="📥" FontSize="18" Margin="0,0,15,0"/>
+                                    <TextBlock Text="Tải về offline"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Tài khoản -->
+                            <Button Style="{StaticResource SidebarButtonStyle}"
+                            Tag="Account">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="👤" FontSize="18" Margin="0,0,15,0"/>
+                                    <TextBlock Text="Tài khoản"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Cài đặt -->
+                            <Button Style="{StaticResource SidebarButtonStyle}"
+                            Tag="Settings">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="⚙️" FontSize="18" Margin="0,0,15,0"/>
+                                    <TextBlock Text="Cài đặt"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
         </Grid>
-
-        <!-- Menu bên trái -->
-        <Grid Grid.Column="0" Background="AliceBlue">
-            <Expander x:Name="exder" HorizontalAlignment="Right" Width="auto" FontSize="15" >
-                <StackPanel Name="spn">
-                    <Button Content="Home" x:Name="btnHomeNavg" Click="btnHomeNavg_Click" />
-                    <Button Content="History" x:Name="btnHistoryNavg" Click="btnHistoryNavg_Click" />
-                    <Button Content="Collections" x:Name="btnCollectionsNavg" Click="btnCollectionsNavg_Click"/>
-                    <Button Content="Tags" />
-                    <Button Content="Game" />
-                </StackPanel>
-            </Expander>
-        </Grid>
-
     </Grid>
 
 </Window>
