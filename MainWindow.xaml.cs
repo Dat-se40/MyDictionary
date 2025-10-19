@@ -28,7 +28,8 @@ namespace MyDictionary
         WordSearchService wordSearchService = new WordSearchService();
         Views.Pages.SuggestionsView suggestionsView;
         Views.Pages.DetailWordView detailWordView ;
-        Views.Pages.Home home; 
+        Views.Pages.Home home;
+        private ThemeService _themeService = ThemeService.Instance;
         public event PropertyChangedEventHandler? PropertyChanged;
         // Biến theo dõi trạng thái Dark Mode
         private bool isDarkMode = false;
@@ -41,7 +42,7 @@ namespace MyDictionary
             detailWordView  = new Views.Pages.DetailWordView() { }; 
             home = new Views.Pages.Home();  
             InitializeComponent();
-            MainFrame.Navigate(home);
+            MainFrame.Navigate(home); 
         }
         async Task OnPropertyChanged([CallerMemberName] string? sender = null)
         {
@@ -61,36 +62,20 @@ namespace MyDictionary
         }
         private void ThemeToggle_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            isDarkMode = !isDarkMode;
+            _themeService.ToggleTheme();
 
             var slider = ThemeSlider;
             var themeIcon = ThemeIcon;
 
-            // Animation cho slider
             DoubleAnimation animation = new DoubleAnimation
             {
                 Duration = TimeSpan.FromMilliseconds(300)
             };
 
-            if (isDarkMode)
+            if (_themeService.CurrentMode == MyDictionary.Services.ThemeMode.Dark)
             {
                 animation.To = 36;
                 themeIcon.Text = "☀️";
-
-                var res = Application.Current.Resources;
-
-                res["MainBackground"] = res["DarkMainBackground"];
-                res["NavbarBackground"] = res["DarkNavbarBackground"];
-                res["TextColor"] = res["DarkTextColor"];
-                res["ButtonColor"] = res["DarkButtonColor"];
-                res["CardBackground"] = res["DarkCardBackground"];
-                res["BorderColor"] = res["DarkBorderColor"];
-                res["WordItemBackground"] = res["DarkWordItemBackground"];
-                res["WordItemHoverBackground"] = res["DarkWordItemHoverBackground"];
-                res["WordItemBorder"] = res["DarkWordItemBorder"];
-                res["ToolbarBackground"] = res["DarkToolbarBackground"];
-                res["SidebarBackground"] = res["DarkSidebarBackground"];
-
                 ThemeSlider.Background = new SolidColorBrush(Color.FromRgb(59, 130, 246));
                 ThemeToggle.Background = new SolidColorBrush(Color.FromRgb(45, 55, 72));
             }
@@ -98,32 +83,9 @@ namespace MyDictionary
             {
                 animation.To = 3;
                 themeIcon.Text = "🌙";
-
-                var res = Application.Current.Resources;
-
-                res["MainBackground"] = res["LightMainBackground"];
-                res["NavbarBackground"] = res["LightNavbarBackground"];
-                res["TextColor"] = res["LightTextColor"];
-                res["ButtonColor"] = res["LightButtonColor"];
-                res["CardBackground"] = res["LightCardBackground"];
-                res["BorderColor"] = res["LightBorderColor"];
-                res["WordItemBackground"] = res["LightWordItemBackground"];
-                res["WordItemHoverBackground"] = res["LightWordItemHoverBackground"];
-                res["WordItemBorder"] = res["LightWordItemBorder"];
-                res["ToolbarBackground"] = res["LightToolbarBackground"];
-                res["SidebarBackground"] = new LinearGradientBrush(
-                    Color.FromRgb(255, 255, 255),
-                    Color.FromRgb(232, 241, 255),
-                    new Point(0, 0),
-                    new Point(0, 1)
-                );
-
                 ThemeSlider.Background = new SolidColorBrush(Color.FromRgb(91, 127, 255));
                 ThemeToggle.Background = new SolidColorBrush(Colors.White);
             }
-
-
-            // Animate slider
             var transform = slider.RenderTransform as TranslateTransform;
             if (transform == null)
             {
@@ -131,10 +93,7 @@ namespace MyDictionary
                 slider.RenderTransform = transform;
             }
             transform.BeginAnimation(TranslateTransform.XProperty, animation);
-
-            // Reload word collection với màu mới
         }
-
         /// <summary>
         /// Xử lý sự kiện click vào Hamburger Button
         /// Mở/đóng Sidebar
