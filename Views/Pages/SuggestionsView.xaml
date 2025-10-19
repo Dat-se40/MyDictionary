@@ -8,12 +8,11 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SuggestionsView">
 
-    <Grid Background="{DynamicResource MainBackground}">
-        <Label Name="lbSuggetion" Content="Có phải bạn đang tìm:" FontSize="20"
-               Foreground="#FF4545B1"></Label>
-      
-            <ListView FontSize="20" Foreground="Blue" Name="lsSuggestions"
-                      ItemsSource="{Binding Collection}" />
-
+    <Grid>
+        <Border Background="{DynamicResource ToolbarBackground}">
+            <StackPanel Orientation="Vertical" Name="Container">
+                <Button Style="{DynamicResource ToolButtonStyle}" Content="Hello"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Page>

@@ -52,7 +52,8 @@ namespace MyDictionary.Services
                 response._words = cachedWords;
             }else if (File.Exists(path))
             {
-                response._words = await FileStorage.LoadWordAsync(path) ?? new List<Word>();
+                // Big problem
+                response._words = await FileStorage.LoadWordAsync(term)?? new List<Word>();
             }else
             {
                 response._words = await ApiClient.FetchWordAsync(term);

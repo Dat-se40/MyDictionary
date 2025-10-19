@@ -1,0 +1,73 @@
+[
+  {
+    "word": "palm",
+    "phonetic": "/ˈpæm/",
+    "phonetics": [
+      {
+        "text": "/ˈpæm/",
+        "audio": "",
+        "sourceUrl": null,
+        "license": null
+      },
+      {
+        "text": "/pɑːm/",
+        "audio": "",
+        "sourceUrl": null,
+        "license": null
+      },
+      {
+        "text": "/pɑlm/",
+        "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/palm-us.mp3",
+        "sourceUrl": "https://commons.wikimedia.org/w/index.php?curid=1762731",
+        "license": {
+          "name": "BY-SA 3.0",
+          "url": "https://creativecommons.org/licenses/by-sa/3.0"
+        }
+      }
+    ],
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "definitions": [
+          {
+            "definition": "Any of various evergreen trees from the family Palmae or Arecaceae, which are mainly found in the tropics.",
+            "synonyms": [
+              "palm tree"
+            ],
+            "antonyms": [],
+            "example": null
+          },
+          {
+            "definition": "A branch or leaf of the palm, anciently borne or worn as a symbol of victory or rejoicing.",
+            "synonyms": [],
+            "antonyms": [],
+            "example": null
+          },
+          {
+            "definition": "(by extension) Triumph; victory.",
+            "synonyms": [],
+            "antonyms": [],
+            "example": null
+          },
+          {
+            "definition": "Any of 23 awards that can be earned after obtaining the Eagle Scout rank, but generally only before turning 18 years old.",
+            "synonyms": [],
+            "antonyms": [],
+            "example": null
+          }
+        ],
+        "synonyms": [
+          "palm tree"
+        ],
+        "antonyms": []
+      }
+    ],
+    "license": {
+      "name": "CC BY-SA 3.0",
+      "url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    "sourceUrls": [
+      "https://en.wiktionary.org/wiki/palm"
+    ]
+  }
+]

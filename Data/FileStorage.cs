@@ -11,25 +11,32 @@ namespace MyDictionary.Data
 {
     internal class FileStorage
     {
-        static private string _storedFolder = Path.Combine(
+        static private string _storedWordPath = Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory,
             @"..\..\..\Data\PersistentStorage\StoredWord"
+        );
+        static public string _storedQuotePath = Path.Combine(
+            AppDomain.CurrentDomain.BaseDirectory,
+            @"..\..\..\Data\PersistentStorage\StoredQuote"
         );
         static private string _listFile = Path.Combine(
            AppDomain.CurrentDomain.BaseDirectory,
            @"..\..\..\Data\PersistentStorage\AvailableWordList.txt"
         );
-
         public static string GetWordFilePath(string word)
         {
-            return Path.Combine(_storedFolder, word + ".json");
+            if (word.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+            {
+                word = Path.GetFileNameWithoutExtension(word);
+            }
+            return Path.Combine(_storedWordPath, word + ".json");
         }
 
         public static List<string> GetStoredWordList()
         {
-            if (!Directory.Exists(_storedFolder)) return new List<string>();
+            if (!Directory.Exists(_storedWordPath)) return new List<string>();
 
-            var result = Directory.GetFiles(_storedFolder, "*.json");
+            var result = Directory.GetFiles(_storedWordPath, "*.json");
             List<string> words = new List<string>();
 
             foreach (var r in result)
@@ -49,7 +56,7 @@ namespace MyDictionary.Data
 
         public static async Task<List<Word>?> LoadWordAsync(string word)
         {
-            string path = GetWordFilePath(word);
+            string path = GetWordFilePath(word.ToLower());
             if (!File.Exists(path)) return null;
 
             var content = await File.ReadAllTextAsync(path);
@@ -102,5 +109,21 @@ namespace MyDictionary.Data
 
                 MessageBox.Show(message, "Download status", MessageBoxButton.OK); 
         }
+
+        public static async Task<Quote?> LoadQuoteAsync(int ID)
+        {
+            string path = Path.Combine(_storedQuotePath, $"quote_{ID}") + ".json";
+            var result = await LoadQuoteAsync(path);
+            return result; 
+        }
+        public static async Task<Quote?> LoadQuoteAsync(string path)
+        {
+            if (!File.Exists(path)) return null;
+
+            var content = await File.ReadAllTextAsync(path);
+            var obj = JsonConvert.DeserializeObject<Quote>(content);
+            return obj; 
+        }
+
     }
 }

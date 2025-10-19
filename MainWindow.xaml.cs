@@ -42,9 +42,7 @@ namespace MyDictionary
             home = new Views.Pages.Home();  
             InitializeComponent();
             MainFrame.Navigate(home);
-           
         }
-
         async Task OnPropertyChanged([CallerMemberName] string? sender = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(sender));
@@ -203,7 +201,7 @@ namespace MyDictionary
 
             if (!reponse._isSuccess)
             {
-                SearchInput.Text = "clm thất bại";
+                SearchInput.Text = "khong load duoc";
             }
             suggestionsView.Reply(reponse);
             MainFrame.Navigate(suggestionsView);
@@ -222,7 +220,14 @@ namespace MyDictionary
                     MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
-
+        private void GoBackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if(MainFrame.CanGoBack) MainFrame.GoBack();
+        }
+        private void GoForwardBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainFrame.CanGoForward) MainFrame.GoForward();
+        }
         /// <summary>
         /// Xử lý sự kiện click vào các Sidebar Item
         /// </summary>
@@ -248,6 +253,9 @@ namespace MyDictionary
                 OnPropertyChanged();
             }
         }
-
+        private void btnHome_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(home);
+        }
     }
 }

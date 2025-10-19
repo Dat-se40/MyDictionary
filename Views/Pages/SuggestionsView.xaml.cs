@@ -42,12 +42,12 @@ namespace MyDictionary.Views.Pages
         public void Reply(SearchResponse response) 
         {
             // Có vấn đề với binding
-            lsSuggestions.Items.Clear(); 
+            Container.Children.Clear(); 
             var suggestions = response.GetWordsList(); 
             if (suggestions != null && suggestions.Count !=0)
             {
                 suggestions.ForEach(sug => {
-                    lsSuggestions.Items.Add(new WorkLink() 
+                    Container.Children.Add(new WorkLink() 
                     {FontSize = 30 , Content = sug});  
                 });
             }

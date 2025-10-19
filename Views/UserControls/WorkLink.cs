@@ -18,8 +18,7 @@ namespace MyDictionary.Views.UserControls
 
         public WorkLink()
         {
-            // Cấu hình cơ bản
-            Background = Brushes.Transparent;
+
             BorderBrush = Brushes.Transparent;
             BorderThickness = new Thickness(0);
             Cursor = Cursors.Hand;
@@ -27,23 +26,17 @@ namespace MyDictionary.Views.UserControls
             HorizontalAlignment = HorizontalAlignment.Left;
             VerticalAlignment = VerticalAlignment.Bottom;
 
-            // Áp dụng màu động từ ResourceDictionary
             SetDynamicColors();
             Click += WorkLink_Click;  
         }
         private void SetDynamicColors()
         {
             var res = Application.Current.Resources;
-
-            if (res["TextColor"] is SolidColorBrush textBrush)
-                Foreground = textBrush;
-            else
-                Foreground = new SolidColorBrush(Color.FromRgb(26, 45, 109)); 
-            Background = Brushes.Transparent;
+            this.Style =  (Style)res["ToolButtonStyle"]; 
+            
         }
         private void WorkLink_Click(object sender, RoutedEventArgs e)
         {
-            // Tìm cửa sổ cha (MainWindow)
             var mainWindow = Application.Current.MainWindow as MyDictionary.MainWindow;
             if (mainWindow != null)
             {

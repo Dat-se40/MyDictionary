@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <ScrollBar Name="scbContent" Orientation="Vertical" HorizontalAlignment="Right" Grid.RowSpan="2" Width="17"/>
         <Label Name ="lbTitle" Content="Label" HorizontalAlignment="Left" Margin="18,0,0,0" VerticalAlignment="Center"
-               Height="38" Width="79" FontSize="20"/>
+               Height="38" Width="403" FontSize="20"/>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" MinHeight="39"/>
