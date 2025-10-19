@@ -72,20 +72,21 @@ namespace MyDictionary
                 Duration = TimeSpan.FromMilliseconds(300)
             };
 
-            if (_themeService.CurrentMode == MyDictionary.Services.ThemeMode.Dark)
+            if (_themeService.CurrentMode == Services.ThemeMode.Dark)
             {
                 animation.To = 36;
                 themeIcon.Text = "☀️";
-                ThemeSlider.Background = new SolidColorBrush(Color.FromRgb(59, 130, 246));
-                ThemeToggle.Background = new SolidColorBrush(Color.FromRgb(45, 55, 72));
+                ThemeSlider.Background = (Brush)Application.Current.Resources["DarkThemeSliderBackground"];
+                ThemeToggle.Background = (Brush)Application.Current.Resources["DarkThemeToggleBackground"];
             }
             else
             {
                 animation.To = 3;
                 themeIcon.Text = "🌙";
-                ThemeSlider.Background = new SolidColorBrush(Color.FromRgb(91, 127, 255));
-                ThemeToggle.Background = new SolidColorBrush(Colors.White);
+                ThemeSlider.Background = (Brush)Application.Current.Resources["LightThemeSliderBackground"];
+                ThemeToggle.Background = (Brush)Application.Current.Resources["LightThemeToggleBackground"];
             }
+
             var transform = slider.RenderTransform as TranslateTransform;
             if (transform == null)
             {

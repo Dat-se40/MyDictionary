@@ -36,6 +36,18 @@
         <GradientStop Color="#F5E8FF" Offset="1"/>
     </LinearGradientBrush>
 
+    <LinearGradientBrush x:Key="LightThemeSliderBackground" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Color="#5B7FFF" Offset="0"/>
+        <GradientStop Color="#5B7FFF" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LightThemeToggleBackground" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Color="#FFFFFF" Offset="0"/>
+        <GradientStop Color="#FFFFFF" Offset="1"/>
+    </LinearGradientBrush>
+
+
+
     <!-- ================================ -->
     <!-- DARK MODE COLORS -->
     <!-- ================================ -->
@@ -74,4 +86,15 @@
         <GradientStop Color="#1E293B" Offset="0"/>
         <GradientStop Color="#0F172A" Offset="1"/>
     </LinearGradientBrush>
+    
+    <LinearGradientBrush x:Key="DarkThemeSliderBackground" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Color="#3B82F6" Offset="0"/>
+        <GradientStop Color="#3B82F6" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="DarkThemeToggleBackground" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Color="#2D3748" Offset="0"/>
+        <GradientStop Color="#2D3748" Offset="1"/>
+    </LinearGradientBrush>
+
 </ResourceDictionary>

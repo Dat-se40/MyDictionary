@@ -187,8 +187,8 @@ namespace MyDictionary.Services
                 WordItemBorder = (Brush)res["LightWordItemBorder"],
                 ToolbarBackground = (Brush)res["LightToolbarBackground"],
                 SidebarBackground = (Brush)res["LightSidebarBackground"],
-                ThemeSliderBackground = (Brush)res["LightThemeSliderBackground"],
-                ThemeToggleBackground = (Brush)res["LightThemeToggleBackground"]
+                ThemeSliderBackground = (Brush)res["DarkThemeSliderBackground"],
+                ThemeToggleBackground = (Brush)res["DarkThemeToggleBackground"]
             };
         }
 
@@ -208,13 +208,8 @@ namespace MyDictionary.Services
                 WordItemBorder = (Brush)res["DarkWordItemBorder"],
                 ToolbarBackground = (Brush)res["DarkToolbarBackground"],
                 SidebarBackground = (Brush)res["DarkSidebarBackground"],
-                ThemeSliderBackground = (Brush)res["DarkThemeSliderBackground"],
-                ThemeToggleBackground = new LinearGradientBrush(
-                    Color.FromRgb(255, 255, 255),
-                    Color.FromRgb(232, 241, 255),
-                    new Point(0, 0),
-                    new Point(0, 1)
-                )
+                ThemeSliderBackground = (Brush)res["LightThemeSliderBackground"],
+                ThemeToggleBackground = (Brush)res["LightThemeToggleBackground"],
             };
         }
     }
